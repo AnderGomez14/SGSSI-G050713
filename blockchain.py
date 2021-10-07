@@ -126,5 +126,5 @@ if __name__ == "__main__":
         else:
             print("Comando no encontrado")
     else:
-        checkBlockChain()  # Debug only
+        # checkBlockChain()  # Debug only
         print("Introduce un comando")
