@@ -3,6 +3,16 @@ import sys
 import os.path
 
 
+def prefix(s1, s2):
+    i = 0
+    while True:
+        if i < len(s1) and i < len(s2) and s1[i] == s2[i]:
+            i = i+1
+        else:
+            break
+    return i
+
+
 def hash(n):
     if n == -1:
         return "0000000000000000000000000000000000000000000000000000000000000000"
@@ -32,16 +42,22 @@ def parseBlock(n):
             data = [d.replace("\n", "") for d in data]
             data = ' '.join(data).split()
 
+            if(n > 2):
+                nonce = data[len(data)-1]
+                data.pop()
+
             if(int(data_lines) != len(data)):
                 return 1
             elif(int(id_block) != n):
-
                 return 2
             elif(previus_block != hash(n-1)):
                 return 3
+            elif(n > 2 and prefix(hash(n), "00000") < 5):
+                return 4
             else:
                 return 0
-    except:
+    except Exception as E:
+        print(E)
         return -1
 
 
@@ -87,6 +103,10 @@ def errorManagement(error, n, tipo):
         print("ERROR (Bloque "+str(n) +
               "): El hash del bloque anterior y el guardado no coinciden")
         return False
+    if error == 4:
+        print("ERROR (Bloque "+str(n) +
+              "): El hash del bloque no comienza por 5 ceros")
+        return False
     else:
         print("ERROR (Bloque "+str(n) +
               "): Desconocido")
@@ -106,4 +126,5 @@ if __name__ == "__main__":
         else:
             print("Comando no encontrado")
     else:
+        checkBlockChain()  # Debug only
         print("Introduce un comando")
