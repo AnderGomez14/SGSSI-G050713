@@ -27,7 +27,7 @@ def tarea1():
     while True:
         hash_i = secrets.token_hex(nbytes=4)
         hash = hashlib.sha256(bytes_file + str.encode(hash_i)).hexdigest()
-        if hash[0] == '0':
+        if hash.startswith('000000'):
             break
         i = i+1
     output = "SGSSI-21.CB.03_salida_tarea1.txt"
