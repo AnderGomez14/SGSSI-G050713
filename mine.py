@@ -9,7 +9,7 @@ def tarea1():
     with open(input, "rb") as f:
         bytes_file = f.read()
     cont = 0
-    while cont < 5000000:
+    while True:
         hash_i = secrets.token_hex(nbytes=4)
         hash = hashlib.sha256(bytes_file + str.encode(hash_i)).hexdigest()
         if hash.startswith('0000000'):
